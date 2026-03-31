@@ -1,0 +1,639 @@
+/* ==================== GLOBAL STYLES ==================== */
+/* 
+   This is the main CSS file for Portfolio Hub
+   It contains all reusable styles for the parent website
+   Keep this file organized and well-commented for easy maintenance
+*/
+
+/* ==================== CSS VARIABLES (Root Styles) ==================== */
+/* 
+   CSS Variables allow us to define values once and reuse them throughout
+   This makes it easy to update colors, spacing, and other properties globally
+*/
+:root {
+    /* Color Palette - Neutral and Professional */
+    --primary-color: #1a1a1a;        /* Dark Black */
+    --secondary-color: #ffffff;      /* White */
+    --accent-color: #0066ff;         /* Bright Blue */
+    --text-dark: #1a1a1a;            /* Dark Text */
+    --text-light: #666666;           /* Light Gray Text */
+    --bg-light: #f5f5f5;             /* Light Background */
+    --bg-dark: #0a0a0a;              /* Dark Background */
+    --border-color: #e0e0e0;         /* Border Color */
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+    
+    /* Font Family */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    
+    /* Font Sizes */
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 24px;
+    --font-size-2xl: 32px;
+    --font-size-3xl: 48px;
+    
+    /* Line Heights */
+    --line-height-sm: 1.4;
+    --line-height-md: 1.6;
+    --line-height-lg: 1.8;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease-in-out;
+    --transition-normal: 0.3s ease-in-out;
+    --transition-slow: 0.5s ease-in-out;
+    
+    /* Border Radius */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
+}
+
+/* ==================== RESET & BASE STYLES ==================== */
+/* 
+   Reset default browser styles for consistency across all browsers
+   Ensure all elements have consistent starting point
+*/
+
+* {
+    margin: 0;                    /* Remove default margins */
+    padding: 0;                   /* Remove default padding */
+    box-sizing: border-box;       /* Include padding/border in width calculations */
+}
+
+html {
+    scroll-behavior: smooth;      /* Smooth scrolling for anchor links */
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+    color: var(--text-dark);
+    background-color: var(--secondary-color);
+    overflow-x: hidden;           /* Prevent horizontal scrollbar */
+}
+
+/* ==================== TYPOGRAPHY ==================== */
+/* 
+   Consistent text styling throughout the website
+   Using font hierarchy for visual organization
+*/
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: var(--line-height-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+h1 {
+    font-size: var(--font-size-3xl);
+}
+
+h2 {
+    font-size: var(--font-size-2xl);
+}
+
+h3 {
+    font-size: var(--font-size-xl);
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: #0052cc;              /* Slightly darker blue on hover */
+}
+
+/* ==================== CONTAINER ==================== */
+/* 
+   Wrapper class for consistent width and padding
+   Use this class to wrap content sections for proper spacing
+*/
+
+.container {
+    max-width: 1200px;            /* Maximum width for large screens */
+    margin: 0 auto;               /* Center the container */
+    padding: 0 var(--spacing-lg); /* Left and right padding */
+}
+
+/* ==================== NAVBAR ==================== */
+/* 
+   Navigation bar at the top of the page
+   Includes responsive hamburger menu for mobile devices
+*/
+
+.navbar {
+    background-color: var(--secondary-color);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;             /* Stick to top while scrolling */
+    top: 0;
+    z-index: 1000;               /* Ensure navbar stays on top */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-container {
+    display: flex;                /* Use flexbox for alignment */
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.navbar-brand {
+    flex: 1;                      /* Take up available space */
+}
+
+.logo {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;                /* Arrange links horizontally */
+    gap: var(--spacing-xl);
+    list-style: none;
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-link {
+    color: var(--text-dark);
+    font-weight: 500;
+    position: relative;
+    transition: color var(--transition-fast);
+}
+
+/* Active link indicator */
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-color);
+}
+
+.nav-link:hover {
+    color: var(--accent-color);
+}
+
+/* Hamburger Menu (Hidden by default, shown on mobile) */
+.hamburger {
+    display: none;                /* Hidden on desktop */
+    flex-direction: column;
+    cursor: pointer;
+    gap: var(--spacing-xs);
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+}
+
+/* ==================== HERO SECTION ==================== */
+/* 
+   Landing page hero section with call-to-action
+   Creates immediate visual impact
+*/
+
+.hero {
+    min-height: 60vh;                    /* Minimum height for visual impact */
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    text-align: center;
+}
+
+.hero-content {
+    animation: fadeInUp 0.8s ease-out;   /* Smooth entrance animation */
+}
+
+.hero-title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-color);
+}
+
+.hero-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--text-light);
+    margin-bottom: var(--spacing-xl);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Call-to-Action Button */
+.cta-button {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-xl);
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    border-radius: var(--border-radius-lg);
+    font-weight: 600;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.2);
+}
+
+.cta-button:hover {
+    background-color: #0052cc;
+    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.3);
+    transform: translateY(-2px);   /* Lift button on hover */
+}
+
+/* ==================== SECTION STYLES ==================== */
+/* 
+   General styles for content sections
+   Provides consistent spacing and typography
+*/
+
+.about, .contact {
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    background-color: var(--secondary-color);
+}
+
+.portfolios {
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    background-color: var(--bg-light);
+}
+
+.section-title {
+    font-size: var(--font-size-2xl);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    color: var(--primary-color);
+}
+
+.section-description {
+    text-align: center;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto var(--spacing-xl);
+    font-size: var(--font-size-lg);
+}
+
+/* ==================== PORTFOLIO GRID ==================== */
+/* 
+   Grid layout for portfolio cards
+   Uses CSS Grid for responsive, flexible layout
+   Cards automatically adjust to available space
+*/
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  /* Responsive columns */
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+/* ==================== PORTFOLIO CARDS ==================== */
+/* 
+   Individual portfolio cards with interactive elements
+   Includes hover animations and transitions
+*/
+
+.portfolio-card {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Card Hover Animation */
+.portfolio-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 12px 24px rgba(0, 102, 255, 0.15);
+    transform: translateY(-8px);   /* Lift card on hover */
+}
+
+/* Card Header (Icon Area) */
+.card-header {
+    padding: var(--spacing-xl);
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-icon {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--accent-color);
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;            /* Circular icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-normal);
+}
+
+.portfolio-card:hover .card-icon {
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+}
+
+/* Card Content (Title and Description) */
+.card-content {
+    padding: var(--spacing-lg);
+    flex: 1;                       /* Expand to fill available space */
+}
+
+.card-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-color);
+}
+
+.card-description {
+    color: var(--text-light);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-lg);
+    margin: 0;
+}
+
+/* Card Footer (Link) */
+.card-footer {
+    padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+}
+
+.card-link {
+    display: inline-block;
+    color: var(--accent-color);
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+/* Underline animation for card link */
+.card-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width var(--transition-fast);
+}
+
+.card-link:hover::after {
+    width: 100%;
+}
+
+/* ==================== CONTACT SECTION ==================== */
+
+.contact-email {
+    text-align: center;
+    color: var(--text-light);
+}
+
+.contact-email a {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* ==================== FOOTER ==================== */
+/* 
+   Footer section at the bottom of the page
+   Displays copyright and essential links
+*/
+
+.footer {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-brand {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer-subtitle {
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.footer-center {
+    display: flex;
+    align-items: center;
+}
+
+.footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+    color: var(--secondary-color);
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    text-align: right;
+}
+
+.footer-copyright {
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+}
+
+/* ==================== ANIMATIONS ==================== */
+/* 
+   Keyframe animations for smooth transitions
+   Used for entrance effects and interactions
+*/
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+/* 
+   Mobile-first responsive design
+   Adjust layout and sizing for smaller screens
+*/
+
+/* Tablet devices (768px and below) */
+@media (max-width: 768px) {
+    /* Hamburger menu becomes visible */
+    .hamburger {
+        display: flex;
+    }
+    
+    /* Hide nav links on mobile (will be shown with JS) */
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--secondary-color);
+        flex-direction: column;
+        gap: var(--spacing-md);
+        padding: var(--spacing-lg);
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    /* Show nav links when active */
+    .nav-links.active {
+        display: flex;
+    }
+    
+    /* Adjust font sizes for smaller screens */
+    .hero-title {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .hero-subtitle {
+        font-size: var(--font-size-md);
+    }
+    
+    .section-title {
+        font-size: var(--font-size-xl);
+    }
+    
+    /* Adjust portfolio grid */
+    .portfolio-grid {
+        grid-template-columns: 1fr;  /* Single column on mobile */
+        gap: var(--spacing-md);
+    }
+    
+    /* Adjust footer layout */
+    .footer-container {
+        grid-template-columns: 1fr;  /* Single column layout */
+    }
+    
+    /* Adjust padding for sections */
+    .hero {
+        min-height: 50vh;
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+    
+    .about, .contact, .portfolios {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+}
+
+/* Small mobile devices (480px and below) */
+@media (max-width: 480px) {
+    /* Reduce padding and margins for very small screens */
+    .navbar-container {
+        padding: var(--spacing-md) var(--spacing-md);
+    }
+    
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .hero-title {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .cta-button {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: var(--font-size-sm);
+    }
+    
+    h1 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .section-title {
+        font-size: var(--font-size-lg);
+    }
+    
+    /* Reduce footer gaps */
+    .footer-container {
+        gap: var(--spacing-lg);
+    }
+}
