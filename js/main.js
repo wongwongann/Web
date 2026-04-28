@@ -92,7 +92,8 @@ function initPortfolioCards() {
         card.style.animationDelay = `${index * 0.1}s`;
         
         card.addEventListener('click', function(event) {
-            if (event.target.tagName === 'A') {
+            // Check if click target is a link or inside a link
+            if (event.target.closest('a')) {
                 return;
             }
             
@@ -121,13 +122,94 @@ function initPortfolioCards() {
 }
 
 function initPageTransition() {
-    const portfolioLinks = document.querySelectorAll('.card-link');
-    
-    portfolioLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
+    const viewPortfolioButtons = document.querySelectorAll('.view-portfolio-btn');
+    const modalOverlay = document.getElementById('portfolioModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalOpenBtn = document.getElementById('modalOpenBtn');
+    const portfolioIframe = document.getElementById('portfolioIframe');
+    const iframeLoader = document.getElementById('iframeLoader');
+    const iframeBlocked = document.getElementById('iframeBlocked');
+    const modalTitle = document.getElementById('modalTitle');
 
+    // Handle View Portfolio button clicks
+    viewPortfolioButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            
+            const portfolioUrl = this.getAttribute('data-url');
+            const portfolioTitle = this.getAttribute('data-title');
+            
+            openModal(portfolioUrl, portfolioTitle);
         });
     });
+
+    // Handle Close button
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    // Handle Open Webpage button
+    modalOpenBtn.addEventListener('click', function(event) {
+        const url = this.getAttribute('href');
+        if (url) {
+            window.open(url, '_blank');
+        }
+    });
+
+    // Close modal when clicking outside the container
+    modalOverlay.addEventListener('click', function(event) {
+        if (event.target === modalOverlay) {
+            closeModal();
+        }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    // Handle iframe load
+    portfolioIframe.addEventListener('load', function() {
+        iframeLoader.classList.add('hidden');
+        portfolioIframe.classList.add('loaded');
+    });
+
+    // Handle iframe error (CORS or blocked)
+    portfolioIframe.addEventListener('error', function() {
+        showBlockedMessage();
+    });
+
+    function openModal(url, title) {
+        // Reset modal state
+        iframeLoader.classList.remove('hidden');
+        iframeBlocked.classList.remove('show');
+        portfolioIframe.classList.remove('loaded');
+        
+        // Set modal content
+        modalTitle.textContent = title;
+        modalOpenBtn.setAttribute('href', url);
+        portfolioIframe.src = url;
+        
+        // Show modal with animation
+        modalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        
+        // Clear iframe
+        setTimeout(() => {
+            portfolioIframe.src = '';
+        }, 300);
+    }
+
+    function showBlockedMessage() {
+        iframeLoader.classList.add('hidden');
+        iframeBlocked.classList.add('show');
+        portfolioIframe.classList.remove('loaded');
+    }
 }
 
 function initScrollEffects() {
